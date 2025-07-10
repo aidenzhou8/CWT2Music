@@ -1,22 +1,18 @@
 %% Load .wav file and plot signal
-[y, Fs] = audioread("prelude-and-fugue-in-e-flat-major.wav"); 
+[y, Fs] = audioread("prelude-and-fugue-clip.wav"); 
 y = y(:,1); % select only one channel
 
-% Extract a short recording
-start_time = 10; % seconds
-end_time = 20; % seconds
-y_c = y(start_time*Fs:end_time*Fs);
-r = length(y_c);
+r = length(y);
 t = (0:r-1)/Fs;
 
 figure;
-plot(t, y_c);
+plot(t, y);
 xlabel('Time (s)');
 ylabel('Amplitude');
 title('Input Audio');
 
 %% Run Continuous Wavelet Transform (CWT)
-[cfs, frq] = cwt(y_c, Fs);
+[cfs, frq] = cwt(y, Fs);
 
 % Compute power and phase from CWT coefficients
 pwr   = abs(cfs).^2;
@@ -43,12 +39,12 @@ colorbar;
 %% Reconstruct signal from CWT coefficients
 % MATLAB provides built-in inverse CWT (icwt)
 
-%y_reconstructed = icwt(cfs, frq, 'SignalMean', mean(y_c));
+% y_reconstructed = icwt(cfs, frq, 'SignalMean', mean(y));
 y_reconstructed = icwt(cfs);
 
 % plot reconstructed vs original
 figure;
-plot(t, y_c, 'b', 'DisplayName', 'Original');
+plot(t, y, 'b', 'DisplayName', 'Original');
 hold on;
 plot(t, y_reconstructed, 'r--', 'DisplayName', 'Reconstructed');
 xlabel('Time (s)');
@@ -59,5 +55,5 @@ legend;
 %% Listen to reconstructed audio (optional)
 % sound(y_reconstructed, Fs);
 
-%% (Optional) Save reconstructed audio
+%% Save reconstructed audio
 audiowrite('reconstructed_audio.wav', y_reconstructed, Fs);

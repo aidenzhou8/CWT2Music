@@ -7,5 +7,6 @@ Lastly, the inverse CWT returns an estimate of the original audio. Due to the da
 
 <img width="500" height="478" alt="Phase" src="https://github.com/user-attachments/assets/ea05a4bb-a6e6-4aa3-bdfc-0aac8bc12aee" />
 <img width="500" height="838" alt="Signals" src="https://github.com/user-attachments/assets/471e330b-534a-490b-9f6c-c30d13a142a0" />
+
 **Left:** The original audio encoded as a phase spectrum. 
 **Right:** A comparison of the original and reconstructed signals. 
